@@ -56,7 +56,7 @@ public class TestConfig implements CommandLineRunner{
 		Category c2 = new Category(null, "Books");
 		Category c3 = new Category(null, "Computers");
 		
-		productRepository.saveAll(Arrays.asList(p1,p2,p3));
+		productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
 		categoryRepository.saveAll(Arrays.asList(c1,c2,c3));
 		
 		p1.getCategories().add(c2);

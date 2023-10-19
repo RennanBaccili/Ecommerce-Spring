@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -44,7 +46,7 @@ public class Product implements Serializable {
 	
 	@OneToMany(mappedBy = "id.product")
 	private Set<OrderItem> items = new HashSet<>();
-
+	// a partir da OrderItens vou pegar o acesso ao Orders
 	
 	public Product() {
 		super();
@@ -90,6 +92,15 @@ public class Product implements Serializable {
 	}
 	public Set<Category> getCategories() {
 		return categories;
+	}
+	//com o metodo GetOrders podemos pegar os orders
+	@JsonIgnore
+	public Set<Order> getOrders(){
+		Set<Order> set = new HashSet<>();
+		for (OrderItem x:items) {
+			set.add(x.getOrder());
+		}
+		return set;
 	}
 	
 	@Override

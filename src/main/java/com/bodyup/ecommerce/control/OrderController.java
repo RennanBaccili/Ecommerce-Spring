@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bodyup.ecommerce.model.Order;
-import com.bodyup.ecommerce.model.User;
 import com.bodyup.ecommerce.services.OrderService;
 
 
