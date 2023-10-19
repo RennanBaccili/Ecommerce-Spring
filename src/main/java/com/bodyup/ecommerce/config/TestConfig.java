@@ -15,9 +15,11 @@ import com.bodyup.ecommerce.repositories.UserRepository;
 @Profile("test")				//commandLineRunner é para iniciar essa app por aqui
 public class TestConfig implements CommandLineRunner{
 	
+	//inversão de dependencia
 	@Autowired
 	private UserRepository userRepository;
 
+	//inicio os usuarios no banco de dados junto com a aplicacao
 	@Override
 	public void run(String... args) throws Exception {
 		User u1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
