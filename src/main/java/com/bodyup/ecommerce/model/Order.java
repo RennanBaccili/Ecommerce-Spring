@@ -35,7 +35,6 @@ public class Order implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private User client;
-	
 	// o que é enviado para  o servidor é código integer, convertido
 	// pela função valueOf
 	private Integer orderStatus;

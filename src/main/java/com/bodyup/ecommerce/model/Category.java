@@ -1,5 +1,9 @@
 package com.bodyup.ecommerce.model;
 
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,6 +18,8 @@ public class Category {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	
+	private Set<Product> products = new HashSet<>();
 	
 	public Category() {
 		
@@ -39,6 +45,28 @@ public class Category {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	//quand ose usa coleções só se usa o get, pois não faz sentido querer
+	//trocar a coleção
+	public Set<Product> getProducts() {
+		return products;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Category other = (Category) obj;
+		return Objects.equals(id, other.id);
 	}
 	
 	
