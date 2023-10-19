@@ -26,25 +26,25 @@ import com.bodyup.ecommerce.services.UserService;
 public class UserController {
 
 	@Autowired
-	private UserService userService;
+	private UserService service;
 	//test
 	
 	//mapeado no padrão rest
 	@GetMapping
 	public ResponseEntity<List<User>> findAll(){
-		List<User> u = userService.findAll();
+		List<User> u = service.findAll();
 		return ResponseEntity.ok().body(u);
 	}
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<User> findById(@PathVariable Long id){
-		User u = userService.findById(id);
+		User u = service.findById(id);
 		return ResponseEntity.ok().body(u);
 	}
 	
 	@PostMapping
 	public ResponseEntity<User> insertUser(@RequestBody User obj){
-		obj = userService.insertUser(obj);
+		obj = service.insertUser(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id})")
 				.buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
@@ -52,13 +52,13 @@ public class UserController {
 	
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deleteUser(@PathVariable Long id){
-		userService.deleteById(id);
+		service.deleteById(id);
 		return ResponseEntity.noContent().build(); //retorna 204
 	}
 	
 	@PutMapping(value="/{id}")
 	public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj){
-		obj = userService.update(id, obj);
+		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}
 	
