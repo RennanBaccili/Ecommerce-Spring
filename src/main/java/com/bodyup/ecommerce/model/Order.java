@@ -2,7 +2,9 @@ package com.bodyup.ecommerce.model;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import com.bodyup.ecommerce.model.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -13,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,6 +32,8 @@ public class Order implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
 
+	
+	private Integer orderStatus;
 	// seguindo conceito de que como essa classe vai ter apenas um usuario
 	// e o usario vai ter vai ter varios ordens de pedido
 	// essa classe recebe a chave estrangeira
@@ -37,7 +42,11 @@ public class Order implements Serializable {
 	private User client;
 	// o que é enviado para  o servidor é código integer, convertido
 	// pela função valueOf
-	private Integer orderStatus;
+	
+	
+	// a partir do mapeamento um para muitos, a classe pedido conhece os items dele
+	@OneToMany(mappedBy="id.order")
+	private Set<OrderItem> items = new HashSet<>();
 
 	public Order() {
 		super();
@@ -85,6 +94,10 @@ public class Order implements Serializable {
 
 	public void setClient(User client) {
 		this.client = client;
+	}
+	
+	public Set<OrderItem> getItems(){
+		return items;
 	}
 	
 	@Override

@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bodyup.ecommerce.model.Order;
+import com.bodyup.ecommerce.model.User;
 import com.bodyup.ecommerce.services.OrderService;
 
 
@@ -29,6 +31,10 @@ public class OrderController {
 		return ResponseEntity.ok().body(o);
 	}
 	
-	
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<Order> findById(@PathVariable Long id){
+		Order u = service.findById(id);
+		return ResponseEntity.ok().body(u);
+	}
 	
 }

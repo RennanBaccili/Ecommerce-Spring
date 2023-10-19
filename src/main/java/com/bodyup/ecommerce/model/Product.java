@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,6 +23,7 @@ public class Product implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private String name;
 	private String description;
 	private Double price;
@@ -39,6 +41,10 @@ public class Product implements Serializable {
 	private Set<Category> categories = new HashSet<>();
 	//estanciar para a coleção não começar valendo nulla e sim vazia
 	// Set é uma interface e o hashSet é correspondente a essa interface
+	
+	@OneToMany(mappedBy = "id.product")
+	private Set<OrderItem> items = new HashSet<>();
+
 	
 	public Product() {
 		super();
