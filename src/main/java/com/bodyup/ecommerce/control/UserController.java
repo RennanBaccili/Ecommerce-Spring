@@ -1,5 +1,6 @@
 package com.bodyup.ecommerce.control;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.bodyup.ecommerce.model.User;
 import com.bodyup.ecommerce.services.UserService;
@@ -41,7 +43,9 @@ public class UserController {
 	@PostMapping
 	public ResponseEntity<User> insertUser(@RequestBody User obj){
 		obj = userService.insertUser(obj);
-		return ResponseEntity.ok().body(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id})")
+				.buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).body(obj);
 	}
 	
 }
