@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
+import com.bodyup.ecommerce.model.enums.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,33 +16,40 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="tab_order")
-public class Order implements Serializable{
-	
+@Table(name = "tab_order")
+public class Order implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
-	//defino a chave primaria, com valor sera gerado automaticamente
+
+	// defino a chave primaria, com valor sera gerado automaticamente
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
-	
-	//seguindo conceito de que como essa classe vai ter apenas um usuario
-	//e o usario vai ter vai ter varios ordens de pedido
-	//essa classe recebe a chave estrangeira
+
+	// seguindo conceito de que como essa classe vai ter apenas um usuario
+	// e o usario vai ter vai ter varios ordens de pedido
+	// essa classe recebe a chave estrangeira
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private User client;
+	
+	// o que é enviado para  o servidor é código integer, convertido
+	// pela função valueOf
+	private Integer orderStatus;
 
 	public Order() {
 		super();
 	}
 
-	public Order(Long id, Instant moment, User client) {
+	public Order(Long id, Instant moment,OrderStatus orderStatus, User client) {
 		super();
 		this.id = id;
 		this.moment = moment;
 		this.client = client;
+		setOrderStatus(orderStatus);
 	}
 
 	public Long getId() {
@@ -58,6 +68,18 @@ public class Order implements Serializable{
 		this.moment = moment;
 	}
 
+	//converto o numero passado para OrderStatus
+	public OrderStatus getOrderStatus() {
+		return OrderStatus.valueOf(orderStatus);
+	}
+
+	//utilizo o getCode para pegar o codigo e adicionar a variavel inteira
+	public void setOrderStatus(OrderStatus order) {
+		if(order != null) {
+			this.orderStatus = order.getCode();
+		}
+	}
+
 	public User getClient() {
 		return client;
 	}
@@ -65,7 +87,7 @@ public class Order implements Serializable{
 	public void setClient(User client) {
 		this.client = client;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -83,6 +105,4 @@ public class Order implements Serializable{
 		return Objects.equals(id, other.id);
 	}
 
-	
-	
 }
