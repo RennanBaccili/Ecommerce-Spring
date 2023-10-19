@@ -41,17 +41,21 @@ public class TestConfig implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		
 		Product p1 = new Product(null,"Camisa branca","Essa camisa é bela", 60.0, "cammisaurl");
-		Product p2 = new Product(null,"Camisa branca","Essa camisa é bela", 50.0, "cammisaurl");
-		Product p3 = new Product(null,"Camisa branca","Essa camisa é bela", 30.0, "cammisaurl");
-		
-		productRepository.saveAll(Arrays.asList(p1,p2,p3));
+		Product p2 = new Product(null,"Camisa Preta","Essa camisa é bela", 50.0, "cammisaurl");
+		Product p3 = new Product(null,"Camisa Amarela","Essa camisa é bela", 30.0, "cammisaurl");
 		
 		Category c1 = new Category(null,"Camisa Larga");
 		Category c2 = new Category(null,"Manga Comprida");
 		
+		productRepository.saveAll(Arrays.asList(p1,p2,p3));
 		categoryRepository.saveAll(Arrays.asList(c1,c2));
 		
+		p1.getCategories().add(c2);
+		p2.getCategories().add(c1);
+		p2.getCategories().add(c2);
+		p3.getCategories().add(c1);
 		
+		productRepository.saveAll(Arrays.asList(p1,p2,p3));
 		
 		User u1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
 		User u2 = new User(null, "Alex Green", "alex@gmail.com", "977777777", "123456");

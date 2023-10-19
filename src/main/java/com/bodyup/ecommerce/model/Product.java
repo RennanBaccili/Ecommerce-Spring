@@ -9,6 +9,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,6 +30,12 @@ public class Product implements Serializable {
 	// Set pois o Set representa um conjunto
 	//então vai garantir que eu não tenha mais de um produto com mais de uma ocorrencia na mesma categoria
 	//o mesmo produtor não pode ter a mesma categoria mais deu ma vez
+	@ManyToMany
+	@JoinTable( 
+	name = "tb_product_category", // crio o nome da tabela que vai fazer a relação
+	joinColumns = @JoinColumn(name= "product_id"), //chave estrangeira do produto
+	inverseJoinColumns = @JoinColumn(name="category_id"))//chave estrangeira da categoria
+	// vou falar qual vai ser o nome da tabela e quais serão as chaves estrangeiras
 	private Set<Category> categories = new HashSet<>();
 	//estanciar para a coleção não começar valendo nulla e sim vazia
 	// Set é uma interface e o hashSet é correspondente a essa interface
