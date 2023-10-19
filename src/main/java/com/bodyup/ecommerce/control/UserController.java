@@ -7,11 +7,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bodyup.ecommerce.model.User;
 
+
+
 //controlador da camada rest
 @RestController
 @RequestMapping(value= "/users")
 public class UserController {
 
+	//test
+	
 	//mapeado no padrão rest
 	@GetMapping
 	public ResponseEntity<User> findAll(){
