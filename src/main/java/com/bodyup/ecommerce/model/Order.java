@@ -9,6 +9,7 @@ import java.util.Set;
 import com.bodyup.ecommerce.model.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -47,7 +49,12 @@ public class Order implements Serializable {
 	// a partir do mapeamento um para muitos, a classe pedido conhece os items dele
 	@OneToMany(mappedBy="id.order")
 	private Set<OrderItem> items = new HashSet<>();
-
+	
+	//no caso do um para um, estou mapeando as entidades para terem o mesmo id
+	// para isso é necessario o cascade
+	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+	private Payment payment;
+	
 	public Order() {
 		super();
 	}
@@ -100,6 +107,14 @@ public class Order implements Serializable {
 		return items;
 	}
 	
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -116,5 +131,4 @@ public class Order implements Serializable {
 		Order other = (Order) obj;
 		return Objects.equals(id, other.id);
 	}
-
 }
