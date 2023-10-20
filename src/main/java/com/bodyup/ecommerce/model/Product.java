@@ -31,9 +31,13 @@ public class Product implements Serializable {
 	private Double price;
 	private String imgUrl;
 	
-	// Set pois o Set representa um conjunto
-	//então vai garantir que eu não tenha mais de um produto com mais de uma ocorrencia na mesma categoria
-	//o mesmo produtor não pode ter a mesma categoria mais deu ma vez
+	
+	/*
+	 *  Set pois o Set representa um conjunto
+	 *	então vai garantir que eu não tenha mais de um produto com mais de uma ocorrencia na mesma categoria
+	 *	o mesmo produtor não pode ter a mesma categoria mais deu ma vez
+	 * */
+
 	@ManyToMany
 	@JoinTable( 
 	name = "tb_product_category", // crio o nome da tabela que vai fazer a relação
@@ -41,6 +45,7 @@ public class Product implements Serializable {
 	inverseJoinColumns = @JoinColumn(name="category_id"))//chave estrangeira da categoria
 	// vou falar qual vai ser o nome da tabela e quais serão as chaves estrangeiras
 	private Set<Category> categories = new HashSet<>();
+	
 	//estanciar para a coleção não começar valendo nulla e sim vazia
 	// Set é uma interface e o hashSet é correspondente a essa interface
 	

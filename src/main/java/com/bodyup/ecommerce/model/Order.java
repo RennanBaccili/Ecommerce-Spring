@@ -115,6 +115,7 @@ public class Order implements Serializable {
 		this.payment = payment;
 	}
 
+	//Jpa por padrão costuma reconhecer o meteodo get, então todas funções começam com get
 	public double getTotal() {
 		double sum = 0.0;
 		for(OrderItem i:items) {

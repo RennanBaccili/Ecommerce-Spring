@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.bodyup.ecommerce.model.User;
 import com.bodyup.ecommerce.repositories.UserRepository;
+import com.bodyup.ecommerce.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService {
@@ -22,7 +23,7 @@ public class UserService {
 
 	public User findById(Long id) {
 		Optional<User> user = repository.findById(id);
-		return user.get();
+		return user.orElseThrow(()-> new ResourceNotFoundException(id));
 	}
 	
 	public User insertUser(User obj) {
