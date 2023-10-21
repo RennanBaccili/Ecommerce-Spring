@@ -42,9 +42,7 @@ public class UserService {
 		}catch(DataIntegrityViolationException e) { // exception da camada de cerviço
 			throw new DatabaseException(e.getMessage());
 		}
-		
 	}
-	
 	public User update(Long id, User obj) {
 		// getReference observa o id passado... o metodo updateData defini quais atributos serão alterados
 		try {
