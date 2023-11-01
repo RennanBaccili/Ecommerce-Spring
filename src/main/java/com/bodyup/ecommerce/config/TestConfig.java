@@ -15,6 +15,7 @@ import com.bodyup.ecommerce.model.Payment;
 import com.bodyup.ecommerce.model.Product;
 import com.bodyup.ecommerce.model.User;
 import com.bodyup.ecommerce.model.enums.OrderStatus;
+import com.bodyup.ecommerce.model.enums.UserRoles;
 import com.bodyup.ecommerce.repositories.CategoryRepository;
 import com.bodyup.ecommerce.repositories.OrderItemRepository;
 import com.bodyup.ecommerce.repositories.OrderRepository;
@@ -69,8 +70,8 @@ public class TestConfig implements CommandLineRunner{
 		
 		productRepository.saveAll(Arrays.asList(p1,p2,p3));
 		
-		User u1 = new User(null, "Nome1", "2023-10-04", "CPF1", "email1@example.com", "senha1");
-		User u2 = new User(null,  "Nome2", "2023-10-05", "CPF2", "email2@example.com", "senha2");
+		User u1 = new User(null, "Nome1", "2023-10-04", "CPF1", "email1@example.com", "senha1",UserRoles.USER);
+		User u2 = new User(null,  "Nome2", "2023-10-05", "CPF2", "email2@example.com", "senha2",UserRoles.ADMIN);
 		
 		// faz a associação altomatica, ao passar o user na instanciação
 		Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"),OrderStatus.PAID, u1);

@@ -23,7 +23,7 @@ import com.bodyup.ecommerce.services.UserService;
 //controlador da camada rest
 @RestController
 @RequestMapping(value= "/users")
-public class UserController {
+public class UserController  {
 
 	@Autowired
 	private UserService service;
@@ -61,5 +61,5 @@ public class UserController {
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}
-	
+		
 }
