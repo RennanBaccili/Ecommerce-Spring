@@ -9,33 +9,32 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bodyup.ecommerce.model.Product;
-import com.bodyup.ecommerce.services.ProductService;
+import com.bodyup.ecommerce.model.Clother;
+import com.bodyup.ecommerce.services.ClotherService;
 
 
 
 //controlador da camada rest
 @RestController
-@RequestMapping(value= "/product")
+@RequestMapping(value= "/clother")
 public class ProductController {
 
 	@Autowired
-	private ProductService service;
+	private ClotherService service;
 	//test
 	
 	//mapeado no padrão rest
 	@GetMapping
-	public ResponseEntity<List<Product>> findAll(){
-		List<Product> u = service.findAll();
+	public ResponseEntity<List<Clother>> findAll(){
+		List<Clother> u = service.findAll();
 		return ResponseEntity.ok().body(u);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Product> findById(@PathVariable Long id){
-		Product u = service.findById(id);
+	public ResponseEntity<Clother> findById(@PathVariable Long id){
+		Clother u = service.findById(id);
 		return ResponseEntity.ok().body(u);
 	}
-	
 
 	
 }

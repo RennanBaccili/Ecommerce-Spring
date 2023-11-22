@@ -3,6 +3,7 @@ package com.bodyup.ecommerce.model.pk;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.bodyup.ecommerce.model.Clother;
 import com.bodyup.ecommerce.model.Order;
 import com.bodyup.ecommerce.model.Product;
 
@@ -22,8 +23,8 @@ public class OrderItemPK implements Serializable{
 	private Order order;
 
 	@ManyToOne
-	@JoinColumn(name = "product_id")
-	private Product product;
+	@JoinColumn(name = "clother_id")
+	 private Clother clother;
 	
 	//getters e setters
 	public Order getOrder() {
@@ -32,18 +33,18 @@ public class OrderItemPK implements Serializable{
 	public void setOrder(Order order) {
 		this.order = order;
 	}
-	public Product getProduct() {
-		return product;
-	}
-	public void setProduct(Product product) {
-		this.product = product;
-	}
 	
 	//nesse caso order e product terão hashcode equals
 	
+	public Clother getClother() {
+		return clother;
+	}
+	public void setClother(Clother clother) {
+		this.clother = clother;
+	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(order, product);
+		return Objects.hash(clother, order);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -54,6 +55,8 @@ public class OrderItemPK implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		OrderItemPK other = (OrderItemPK) obj;
-		return Objects.equals(order, other.order) && Objects.equals(product, other.product);
+		return Objects.equals(clother, other.clother) && Objects.equals(order, other.order);
 	}
+	
+	
 }

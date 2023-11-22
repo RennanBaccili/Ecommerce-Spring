@@ -7,19 +7,18 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 
-@Entity
-@Table(name="tab_product")
-public class Product implements Serializable {
+
+@MappedSuperclass
+public abstract class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -31,27 +30,26 @@ public class Product implements Serializable {
 	private Double price;
 	private String imgUrl;
 	
-	
 	/*
 	 *  Set pois o Set representa um conjunto
 	 *	então vai garantir que eu não tenha mais de um produto com mais de uma ocorrencia na mesma categoria
 	 *	o mesmo produtor não pode ter a mesma categoria mais deu ma vez
 	 * */
-
-	@ManyToMany
-	@JoinTable( 
-	name = "tb_product_category", // crio o nome da tabela que vai fazer a relação
-	joinColumns = @JoinColumn(name= "product_id"), //chave estrangeira do produto
-	inverseJoinColumns = @JoinColumn(name="category_id"))//chave estrangeira da categoria
-	// vou falar qual vai ser o nome da tabela e quais serão as chaves estrangeiras
-	private Set<Category> categories = new HashSet<>();
-	
-	//estanciar para a coleção não começar valendo nulla e sim vazia
-	// Set é uma interface e o hashSet é correspondente a essa interface
-	
-	@OneToMany(mappedBy = "id.product")
-	private Set<OrderItem> items = new HashSet<>();
-	// a partir da OrderItens vou pegar o acesso ao Orders
+//
+//	@ManyToMany
+//	@JoinTable( 
+//	name = "tb_product_category", // crio o nome da tabela que vai fazer a relação
+//	joinColumns = @JoinColumn(name= "product_id"), //chave estrangeira do produto
+//	inverseJoinColumns = @JoinColumn(name="category_id"))//chave estrangeira da categoria
+//	// vou falar qual vai ser o nome da tabela e quais serão as chaves estrangeiras
+//	private Set<Category> categories = new HashSet<>();
+//	
+//	//estanciar para a coleção não começar valendo nulla e sim vazia
+//	// Set é uma interface e o hashSet é correspondente a essa interface
+//	
+//	@OneToMany(mappedBy = "id.product")
+//	private Set<OrderItem> items = new HashSet<>();
+//	// a partir da OrderItens vou pegar o acesso ao Orders
 	
 	public Product() {
 		super();
@@ -94,18 +92,6 @@ public class Product implements Serializable {
 	}
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
-	}
-	public Set<Category> getCategories() {
-		return categories;
-	}
-	//com o metodo GetOrders podemos pegar os orders
-	@JsonIgnore
-	public Set<Order> getOrders(){
-		Set<Order> set = new HashSet<>();
-		for (OrderItem x:items) {
-			set.add(x.getOrder());
-		}
-		return set;
 	}
 	
 	@Override

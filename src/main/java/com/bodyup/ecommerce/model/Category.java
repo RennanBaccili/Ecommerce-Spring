@@ -25,7 +25,7 @@ public class Category {
 	//categoria e produtos, tem uma relação muito para muito
 	@JsonIgnore
 	@ManyToMany(mappedBy ="categories") // mapeio o relacionamento criado na class products
-	private Set<Product> products = new HashSet<>();
+	private Set<Clother> products = new HashSet<>();
 	
 	public Category() {
 		
@@ -54,7 +54,7 @@ public class Category {
 	}
 	//quand ose usa coleções só se usa o get, pois não faz sentido querer
 	//trocar a coleção
-	public Set<Product> getProducts() {
+	public Set<Clother> getProducts() {
 		return products;
 	}
 
