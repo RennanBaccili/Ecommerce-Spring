@@ -28,6 +28,8 @@ import jakarta.persistence.TemporalType;
 
 //implementa classe serializable
 
+// user details é uma interrface que sera implementada
+
 @Entity
 @Table(name="tab_user")
 public class User implements Serializable,UserDetails {
@@ -40,8 +42,8 @@ public class User implements Serializable,UserDetails {
 	private String name;
 	
 	@Temporal(TemporalType.DATE)
-	
 	private Calendar date;
+	
 	private String cpf;
 	private String email;
 	private String password;
@@ -72,7 +74,7 @@ public class User implements Serializable,UserDetails {
 		this.cpf = cpf;
 		this.email = email;
 		this.password = password;
-	    this.role = role;
+	    this.role = UserRoles.USER;
 	}
 	
 	//getters setters
@@ -161,10 +163,11 @@ public class User implements Serializable,UserDetails {
 		return Objects.equals(id, other.id);
 	}
 
-//	User datails
+//	UserDetails
 	
 	@Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+		// rola admin, tem todos os acessos, o user tem só de userr
     	if(this.role == UserRoles.ADMIN)
     		return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
     	else
@@ -177,6 +180,7 @@ public class User implements Serializable,UserDetails {
     public String getUsername() {
         return email;// Supondo que o e-mail seja o nome de usuário
     }
+    
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub

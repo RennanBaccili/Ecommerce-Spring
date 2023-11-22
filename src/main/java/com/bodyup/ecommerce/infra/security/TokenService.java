@@ -13,22 +13,24 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.bodyup.ecommerce.model.User;
 
-@Service
+@Service 
 public class TokenService {
 	
-	//valor definido no propities
+	//valor definido no propities para a secret
 	@Value("${api.security.token.secret}")
 	private String secret;
 	
 	public String generateToken(User user) {
 		try {
-//			criação do token jwt
+			//Primeiro define o algoritimo de token, ele recebe por parametro uma secret
+			//A Secret serve para gerar hashs diferentes, um parametro para adicionar segurança
+			//Como uma chave de segurança
 			Algorithm algorithm = Algorithm.HMAC256(secret);
-			String token = JWT.create()
-					.withIssuer("auth-api")
-					.withSubject(user.getEmail())
-					.withExpiresAt(genExpirationDate())
-					.sign(algorithm);
+			String token = JWT.create() // aqui geramos o token
+					.withIssuer("auth-api") //Issuor é o emissor que criou a api
+					.withSubject(user.getEmail()) //Subject é o usuario que está recebendo o token
+					.withExpiresAt(genExpirationDate())// tempo de experiação do token
+					.sign(algorithm); //assinatura e geração final
 			
 			return token;
 			
@@ -45,14 +47,14 @@ public class TokenService {
 			return JWT.require(algorithm)
 					.withIssuer("auth-api")
 					.build()
-					.verify(token)
-					.getSubject();
+					.verify(token)// descptografia do token
+					.getSubject(); // e pego o dado
 		} catch (JWTVerificationException exception) {
 			return "";
 		}
 	}
 	
-	private Instant genExpirationDate() {
+	private Instant genExpirationDate() { //2 horas
 		return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
 	}
 

@@ -37,11 +37,14 @@ public class AuthenticationController {
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid AuthenticationDTO data) {
         try {
+        	// essa classe vem do spring security
         	var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
-            var auth = this.authenticationManager.authenticate(usernamePassword);
+        	//   aqui autentica o username token
+        	var auth = this.authenticationManager.authenticate(usernamePassword);
 
             var token = tokenService.generateToken((User)auth.getPrincipal());
             // Supondo que o retorno seja uma String representando um token JWT ou uma mensagem
+            
             return ResponseEntity.ok(new LoginResponseDTO(token));
         } catch (AuthenticationException e) {
             // Aqui você trata a exceção de autenticação (pode ser uma exceção mais específica)
@@ -58,7 +61,7 @@ public class AuthenticationController {
 	    if (repository.findByEmail(data.email()) != null) {
 	        return ResponseEntity.badRequest().body("O e-mail fornecido já está em uso.");
 	    }
-
+	    // dessa forma pegamos o hash da senha do usuario
 	    String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
 
 	    // Registrando a senha encriptada

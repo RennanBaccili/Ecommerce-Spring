@@ -7,5 +7,6 @@ import com.bodyup.ecommerce.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long>{
 
+	//findBy Nome do login ou email
 	UserDetails findByEmail(String email);
 }

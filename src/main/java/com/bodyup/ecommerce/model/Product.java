@@ -30,7 +30,7 @@ public class Product implements Serializable {
 	private String description;
 	private Double price;
 	private String imgUrl;
-	
+
 	
 	/*
 	 *  Set pois o Set representa um conjunto
