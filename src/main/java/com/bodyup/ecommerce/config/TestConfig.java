@@ -2,6 +2,8 @@ package com.bodyup.ecommerce.config;
 
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -46,17 +48,21 @@ public class TestConfig implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Clother p6 = new Clother(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "",ClotherSize.G);
-		
-		clotherRepository.save(p6);
+		Map<ClotherSize, Integer> sizesQuantities = new HashMap<>();
+		sizesQuantities.put(ClotherSize.P, 10);
+		sizesQuantities.put(ClotherSize.M, 15);
+		sizesQuantities.put(ClotherSize.G, 20);
+		sizesQuantities.put(ClotherSize.GG, 30);
+
+		Clother clother = new Clother(1L, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "", sizesQuantities);
 		
 		Category c1 = new Category(null, "Camiseta");
 
 		categoryRepository.saveAll(Arrays.asList(c1));
 		
-		p6.getCategories().add(c1);
+		clother.getCategories().add(c1);
 		
-		clotherRepository.save(p6);
+		clotherRepository.save(clother);
 		
 		User u1 = new User(null, "Nome1", "2023-10-04", "CPF1", "email1@example.com", "senha1");
 		User u2 = new User(null,  "Nome2", "2023-10-05", "CPF2", "email2@example.com", "senha2");
