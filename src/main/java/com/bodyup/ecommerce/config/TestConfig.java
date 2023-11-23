@@ -11,16 +11,14 @@ import org.springframework.context.annotation.Profile;
 import com.bodyup.ecommerce.model.Category;
 import com.bodyup.ecommerce.model.Clother;
 import com.bodyup.ecommerce.model.Order;
-import com.bodyup.ecommerce.model.OrderItem;
 import com.bodyup.ecommerce.model.Payment;
-import com.bodyup.ecommerce.model.Product;
 import com.bodyup.ecommerce.model.User;
 import com.bodyup.ecommerce.model.enums.ClotherSize;
 import com.bodyup.ecommerce.model.enums.OrderStatus;
 import com.bodyup.ecommerce.repositories.CategoryRepository;
+import com.bodyup.ecommerce.repositories.ClotherRepository;
 import com.bodyup.ecommerce.repositories.OrderItemRepository;
 import com.bodyup.ecommerce.repositories.OrderRepository;
-import com.bodyup.ecommerce.repositories.ClotherRepository;
 import com.bodyup.ecommerce.repositories.UserRepository;
 
 //para avisar que essa classe é deconfiguração
@@ -57,6 +55,8 @@ public class TestConfig implements CommandLineRunner{
 		categoryRepository.saveAll(Arrays.asList(c1));
 		
 		p6.getCategories().add(c1);
+		
+		clotherRepository.save(p6);
 		
 		User u1 = new User(null, "Nome1", "2023-10-04", "CPF1", "email1@example.com", "senha1");
 		User u2 = new User(null,  "Nome2", "2023-10-05", "CPF2", "email2@example.com", "senha2");
