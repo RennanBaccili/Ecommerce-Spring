@@ -28,6 +28,14 @@ public class ClotherService {
 	              .collect(Collectors.toList());
 	    }
 	
+	 // Método para obter todos os registros ativos
+    public List<ClotherDTO> getAllActiveClotherDTOs() {
+        List<Clother> activeClothers = repository.findByStatusAndStatusNot("ativo", "excluído");
+        return activeClothers.stream()
+                .map(ClotherDTO::new)
+                .collect(Collectors.toList());
+    }
+	
 	public Optional<ClotherDTO> findById(Long id) {
 		return repository.findById(id).map(ClotherDTO::new);
 	}
@@ -47,4 +55,18 @@ public class ClotherService {
 		repository.deleteById(id);
 	}
 	
+	public void deleteClother(Long id) {
+        Clother clother = repository.findById(id).orElse(null);
+        if (clother != null) {
+            clother.delete();
+            repository.save(clother);
+        }
+	}
+    public void restoreClother(Long id) {
+        Clother clother = repository.findById(id).orElse(null);
+        if (clother != null) {
+            clother.restore();
+            repository.save(clother);
+        }
+    }
 }

@@ -32,6 +32,8 @@ public class Clother extends Product{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Column(name = "status", columnDefinition = "VARCHAR(10) DEFAULT 'ativo'")
+	private String status = "ativo";
 	
 	 // Novo campo para representar as quantidades disponíveis para cada tamanho
     @ElementCollection
@@ -110,6 +112,16 @@ public class Clother extends Product{
 		return set;
 	}
 	
+	// Método para marcar o registro como excluído
+	public void delete() {
+	    this.status = "excluído";
+	}
+
+	// Método para restaurar o registro excluído
+	public void restore() {
+	    this.status = "ativo";
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -129,4 +141,6 @@ public class Clother extends Product{
 		Clother other = (Clother) obj;
 		return Objects.equals(id, other.id);
 	}
+
+	
 }
