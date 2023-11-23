@@ -30,6 +30,15 @@ public class ClotherService {
 		return repository.findById(id).map(ClotherDTO::new);
 	}
 	
+	public void inserClother(ClotherDTO dados) {
+		repository.save(new Clother(dados.id(),
+				dados.name(),
+				dados.description(),
+				dados.price(),
+				dados.imgUrl(),
+				dados.size()));
+	}
+	
 	public void deleteById(Long id) {
 		repository.deleteById(id);
 	}

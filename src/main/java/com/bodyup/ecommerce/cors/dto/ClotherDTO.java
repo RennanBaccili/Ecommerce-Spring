@@ -13,5 +13,4 @@ public record ClotherDTO(Long id, String name, String description, Double price,
                 clother.getImgUrl(),
                 clother.getSize());
 	}
-
 }
